@@ -19,7 +19,6 @@ import {
   type DonationFormErrors,
   type DonationFormValues,
 } from "@/lib/validation";
-import { cn } from "@/lib/cn";
 
 const initialValues: DonationFormValues = {
   currency: "AED",
@@ -30,6 +29,17 @@ const initialValues: DonationFormValues = {
   phone: "",
   frequency: "one-time",
 };
+
+const inputStyle = (error?: string): React.CSSProperties => ({
+  width: "100%",
+  borderRadius: "2px",
+  border: error ? "1px solid #f87171" : "1px solid rgba(22,58,92,0.18)",
+  backgroundColor: "#ffffff",
+  padding: "0.625rem 0.75rem",
+  fontSize: "0.875rem",
+  color: "#163A5C",
+  outline: "none",
+});
 
 export function Donate() {
   const reduceMotion = useReducedMotion();
@@ -78,70 +88,55 @@ export function Donate() {
       return;
     }
 
-    // Live providers would redirect / confirm here. Never invent success.
     setStatusMessage(`Payment reference ${result.reference} recorded.`);
   }
 
   return (
     <Section id="donate" tone="white">
-      <div className="grid items-start gap-10 lg:grid-cols-2 lg:gap-14">
+      <div className="mx-auto max-w-2xl">
         <motion.div
-          initial={reduceMotion ? false : { opacity: 0, y: 18 }}
+          initial={reduceMotion ? false : { opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.5 }}
+          className="text-center"
         >
           <SectionHeading
             eyebrow={donationSection.eyebrow}
             title={donationSection.heading}
             description={donationSection.intro}
+            align="center"
+            className="mx-auto"
           />
-          <p className="mt-5 max-w-xl text-sm leading-relaxed text-ink sm:text-base">
+          <p
+            className="mx-auto mt-4 max-w-xl text-sm leading-relaxed sm:text-base"
+            style={{ color: "#4A5A6A" }}
+          >
             {donationSection.body}
           </p>
-          <div
-            className="relative mt-8 min-h-[16rem] overflow-hidden sm:min-h-[20rem]"
-            aria-hidden
-          >
-            <div
-              className="absolute inset-0"
-              style={{
-                background:
-                  "linear-gradient(145deg, #163A5C 0%, #0F4C6E 55%, #5FA4C1 140%)",
-              }}
-            />
-            <div
-              className="absolute -top-10 -right-8 size-56 rounded-full border"
-              style={{ borderColor: "rgba(255,255,255,0.12)" }}
-            />
-            <div
-              className="absolute bottom-6 left-6 size-28 rounded-full"
-              style={{
-                background:
-                  "radial-gradient(circle, rgba(200,135,31,0.45), transparent 70%)",
-              }}
-            />
-            <p
-              className="absolute right-6 bottom-6 max-w-[11rem] text-right font-heading text-2xl leading-snug"
-              style={{ color: "rgba(255,255,255,0.92)", fontWeight: 600 }}
-            >
-              Kindness, multiplied.
-            </p>
-          </div>
         </motion.div>
 
         <motion.form
-          initial={reduceMotion ? false : { opacity: 0, y: 20 }}
+          initial={reduceMotion ? false : { opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.55, delay: 0.05 }}
+          transition={{ duration: 0.5, delay: 0.06 }}
           onSubmit={handleSubmit}
           noValidate
-          className="space-y-5 border border-navy/10 bg-cream p-6 sm:p-8"
+          className="mt-10 space-y-5 p-6 text-left sm:p-8"
+          style={{
+            border: "1px solid rgba(22,58,92,0.12)",
+            backgroundColor: "#FBF8F5",
+          }}
           aria-describedby="donate-status"
         >
           <div
-            className="border border-gold/35 bg-gold/10 px-4 py-3 text-sm leading-relaxed text-navy"
+            className="px-4 py-3 text-sm leading-relaxed"
+            style={{
+              border: "1px solid rgba(200,135,31,0.35)",
+              backgroundColor: "rgba(200,135,31,0.1)",
+              color: "#163A5C",
+            }}
             role="status"
           >
             {donationSection.disabledBanner}
@@ -156,9 +151,12 @@ export function Donate() {
                 const currency = e.target.value as DonationCurrency;
                 const nextPresets = getPresetsForCurrency(currency);
                 updateField("currency", currency);
-                updateField("amount", String(nextPresets[1] ?? nextPresets[0] ?? ""));
+                updateField(
+                  "amount",
+                  String(nextPresets[1] ?? nextPresets[0] ?? ""),
+                );
               }}
-              className={fieldClass(errors.currency)}
+              style={inputStyle(errors.currency)}
             >
               {donationCurrencies.map((entry) => (
                 <option key={entry.code} value={entry.code}>
@@ -169,8 +167,8 @@ export function Donate() {
           </Field>
 
           <div>
-            <p className="mb-2 text-sm font-medium text-navy">
-              Suggested amounts <span className="text-gold">*</span>
+            <p className="mb-2 text-sm font-medium" style={{ color: "#163A5C" }}>
+              Suggested amounts <span style={{ color: "#C8871F" }}>*</span>
             </p>
             <div className="flex flex-wrap gap-2">
               {presets.map((amount) => {
@@ -180,12 +178,16 @@ export function Donate() {
                     key={amount}
                     type="button"
                     onClick={() => updateField("amount", String(amount))}
-                    className={cn(
-                      "px-3.5 py-2 text-sm font-semibold transition-colors",
+                    className="px-3.5 py-2 text-sm font-semibold"
+                    style={
                       selected
-                        ? "bg-navy text-white"
-                        : "bg-white text-navy hover:bg-mist",
-                    )}
+                        ? { backgroundColor: "#163A5C", color: "#ffffff" }
+                        : {
+                            backgroundColor: "#ffffff",
+                            color: "#163A5C",
+                            border: "1px solid rgba(22,58,92,0.12)",
+                          }
+                    }
                   >
                     {formatDonationAmount(
                       amount,
@@ -205,13 +207,13 @@ export function Donate() {
               value={values.amount}
               onChange={(e) => updateField("amount", e.target.value)}
               aria-invalid={Boolean(errors.amount)}
-              className={fieldClass(errors.amount)}
+              style={inputStyle(errors.amount)}
             />
           </Field>
 
           <fieldset>
-            <legend className="mb-2 text-sm font-medium text-navy">
-              Frequency <span className="text-gold">*</span>
+            <legend className="mb-2 text-sm font-medium" style={{ color: "#163A5C" }}>
+              Frequency <span style={{ color: "#C8871F" }}>*</span>
             </legend>
             <div className="flex flex-wrap gap-2">
               {(
@@ -226,12 +228,16 @@ export function Donate() {
                     key={option.id}
                     type="button"
                     onClick={() => updateField("frequency", option.id)}
-                    className={cn(
-                      "px-3.5 py-2 text-sm font-semibold transition-colors",
+                    className="px-3.5 py-2 text-sm font-semibold"
+                    style={
                       selected
-                        ? "bg-navy text-white"
-                        : "bg-white text-navy hover:bg-mist",
-                    )}
+                        ? { backgroundColor: "#163A5C", color: "#ffffff" }
+                        : {
+                            backgroundColor: "#ffffff",
+                            color: "#163A5C",
+                            border: "1px solid rgba(22,58,92,0.12)",
+                          }
+                    }
                   >
                     {option.label}
                   </button>
@@ -250,7 +256,7 @@ export function Donate() {
               autoComplete="name"
               value={values.fullName}
               onChange={(e) => updateField("fullName", e.target.value)}
-              className={fieldClass(errors.fullName)}
+              style={inputStyle(errors.fullName)}
             />
           </Field>
 
@@ -262,7 +268,7 @@ export function Donate() {
               autoComplete="email"
               value={values.email}
               onChange={(e) => updateField("email", e.target.value)}
-              className={fieldClass(errors.email)}
+              style={inputStyle(errors.email)}
             />
           </Field>
 
@@ -273,7 +279,7 @@ export function Donate() {
               autoComplete="country-name"
               value={values.country}
               onChange={(e) => updateField("country", e.target.value)}
-              className={fieldClass(errors.country)}
+              style={inputStyle(errors.country)}
             />
           </Field>
 
@@ -285,19 +291,25 @@ export function Donate() {
               autoComplete="tel"
               value={values.phone}
               onChange={(e) => updateField("phone", e.target.value)}
-              className={fieldClass(errors.phone)}
+              style={inputStyle(errors.phone)}
             />
           </Field>
 
-          <div className="flex flex-col gap-3 pt-1">
-            <Button type="submit" size="lg" disabled={!paymentsEnabled}>
+          <div className="flex flex-col items-center gap-3 pt-1">
+            <Button
+              type="submit"
+              size="lg"
+              disabled={!paymentsEnabled}
+              className="w-full sm:w-auto"
+            >
               {paymentsEnabled
                 ? "Continue to Payment"
                 : donationSection.disabledButtonLabel}
             </Button>
             <p
               id="donate-status"
-              className="text-sm text-ink/70"
+              className="text-center text-sm"
+              style={{ color: "#4A5A6A" }}
               role="status"
               aria-live="polite"
             >
@@ -325,22 +337,16 @@ function Field({
 }) {
   return (
     <div>
-      <label htmlFor={id} className="mb-1.5 block text-sm font-medium text-navy">
+      <label
+        htmlFor={id}
+        className="mb-1.5 block text-sm font-medium"
+        style={{ color: "#163A5C" }}
+      >
         {label}
-        {required ? <span className="text-gold"> *</span> : null}
+        {required ? <span style={{ color: "#C8871F" }}> *</span> : null}
       </label>
       {children}
       {error ? <p className="mt-1.5 text-sm text-red-700">{error}</p> : null}
     </div>
-  );
-}
-
-function fieldClass(error?: string) {
-  return cn(
-    "w-full rounded-sm border bg-white px-3 py-2.5 text-sm text-navy outline-none transition-colors",
-    "placeholder:text-ink/40 disabled:cursor-not-allowed disabled:opacity-60",
-    error
-      ? "border-red-400 focus:border-red-500"
-      : "border-navy/15 focus:border-globe",
   );
 }

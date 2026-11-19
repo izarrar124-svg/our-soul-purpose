@@ -10,7 +10,6 @@ import {
   validateContactForm,
   type ContactFormValues,
 } from "@/lib/validation";
-import { cn } from "@/lib/cn";
 
 const initialValues: ContactFormValues = {
   fullName: "",
@@ -19,6 +18,17 @@ const initialValues: ContactFormValues = {
   inquiryType: "",
   message: "",
 };
+
+const inputStyle = (error?: string): React.CSSProperties => ({
+  width: "100%",
+  borderRadius: "2px",
+  border: error ? "1px solid #f87171" : "1px solid rgba(22,58,92,0.18)",
+  backgroundColor: "#FBF8F5",
+  padding: "0.625rem 0.75rem",
+  fontSize: "0.875rem",
+  color: "#163A5C",
+  outline: "none",
+});
 
 export function Contact() {
   const endpoint = useMemo(() => getFormspreeEndpoint(), []);
@@ -84,32 +94,40 @@ export function Contact() {
 
   return (
     <Section id="contact" tone="cream">
-      <div className="grid gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-16">
-        <div>
-          <SectionHeading
-            eyebrow="Contact"
-            title="We Would Love to Hear From You"
-            description="Share a question, partnership idea, or interest in volunteering. Until a public email address is published, this form is the planned channel for inquiries."
-          />
-          <div
-            className="mt-10 hidden h-px w-16 bg-gold/60 lg:block"
-            aria-hidden
-          />
-        </div>
+      <div className="mx-auto max-w-2xl">
+        <SectionHeading
+          eyebrow="Contact"
+          title="We Would Love to Hear From You"
+          description="Share a question, partnership idea, or interest in volunteering. Until a public email address is published, this form is the planned channel for inquiries."
+          align="center"
+          className="mx-auto mb-10"
+        />
 
         <form
           onSubmit={handleSubmit}
           noValidate
-          className="space-y-5 border-t border-navy/15 pt-8 sm:border sm:border-navy/10 sm:bg-white sm:p-8 sm:pt-8"
+          className="space-y-5 p-6 sm:p-8"
+          style={{
+            border: "1px solid rgba(22,58,92,0.12)",
+            backgroundColor: "#ffffff",
+          }}
           aria-describedby="contact-form-status"
         >
           {!formReady ? (
             <div
-              className="border border-gold/30 bg-gold/10 px-4 py-3 text-sm text-navy"
+              className="px-4 py-3 text-sm"
+              style={{
+                border: "1px solid rgba(200,135,31,0.35)",
+                backgroundColor: "rgba(200,135,31,0.1)",
+                color: "#163A5C",
+              }}
               role="status"
             >
               The contact form is not active yet. Set{" "}
-              <code className="rounded bg-mist px-1.5 py-0.5 text-xs">
+              <code
+                className="px-1.5 py-0.5 text-xs"
+                style={{ backgroundColor: "#E6EEF6" }}
+              >
                 NEXT_PUBLIC_FORMSPREE_ID
               </code>{" "}
               in your environment to enable submissions. Fields below are shown
@@ -126,8 +144,7 @@ export function Contact() {
               onChange={(e) => updateField("fullName", e.target.value)}
               disabled={!formReady || status === "submitting"}
               aria-invalid={Boolean(errors.fullName)}
-              aria-describedby={errors.fullName ? "fullName-error" : undefined}
-              className={fieldClass(errors.fullName)}
+              style={inputStyle(errors.fullName)}
             />
           </Field>
 
@@ -141,8 +158,7 @@ export function Contact() {
               onChange={(e) => updateField("email", e.target.value)}
               disabled={!formReady || status === "submitting"}
               aria-invalid={Boolean(errors.email)}
-              aria-describedby={errors.email ? "email-error" : undefined}
-              className={fieldClass(errors.email)}
+              style={inputStyle(errors.email)}
             />
           </Field>
 
@@ -155,8 +171,7 @@ export function Contact() {
               onChange={(e) => updateField("country", e.target.value)}
               disabled={!formReady || status === "submitting"}
               aria-invalid={Boolean(errors.country)}
-              aria-describedby={errors.country ? "country-error" : undefined}
-              className={fieldClass(errors.country)}
+              style={inputStyle(errors.country)}
             />
           </Field>
 
@@ -173,10 +188,7 @@ export function Contact() {
               onChange={(e) => updateField("inquiryType", e.target.value)}
               disabled={!formReady || status === "submitting"}
               aria-invalid={Boolean(errors.inquiryType)}
-              aria-describedby={
-                errors.inquiryType ? "inquiryType-error" : undefined
-              }
-              className={fieldClass(errors.inquiryType)}
+              style={inputStyle(errors.inquiryType)}
             >
               <option value="">Select an option</option>
               {inquiryTypes.map((type) => (
@@ -196,27 +208,30 @@ export function Contact() {
               onChange={(e) => updateField("message", e.target.value)}
               disabled={!formReady || status === "submitting"}
               aria-invalid={Boolean(errors.message)}
-              aria-describedby={errors.message ? "message-error" : undefined}
-              className={cn(fieldClass(errors.message), "min-h-28 resize-y")}
+              style={{ ...inputStyle(errors.message), minHeight: "7rem", resize: "vertical" }}
             />
           </Field>
 
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+          <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
             <Button
               type="submit"
               disabled={!formReady || status === "submitting"}
               size="lg"
+              className="w-full sm:w-auto"
             >
               {status === "submitting" ? "Sending…" : "Send Message"}
             </Button>
             <p
               id="contact-form-status"
-              className={cn(
-                "text-sm",
-                status === "success" && "text-ocean",
-                status === "error" && "text-red-700",
-                status === "idle" && "text-ink/70",
-              )}
+              className="text-center text-sm"
+              style={{
+                color:
+                  status === "success"
+                    ? "#0F4C6E"
+                    : status === "error"
+                      ? "#b91c1c"
+                      : "#4A5A6A",
+              }}
               role="status"
               aria-live="polite"
             >
@@ -242,29 +257,18 @@ function Field({
   required?: boolean;
   children: React.ReactNode;
 }) {
-  const errorId = `${id}-error`;
   return (
     <div>
-      <label htmlFor={id} className="mb-1.5 block text-sm font-medium text-navy">
+      <label
+        htmlFor={id}
+        className="mb-1.5 block text-sm font-medium"
+        style={{ color: "#163A5C" }}
+      >
         {label}
-        {required ? <span className="text-gold"> *</span> : null}
+        {required ? <span style={{ color: "#C8871F" }}> *</span> : null}
       </label>
       {children}
-      {error ? (
-        <p id={errorId} className="mt-1.5 text-sm text-red-700">
-          {error}
-        </p>
-      ) : null}
+      {error ? <p className="mt-1.5 text-sm text-red-700">{error}</p> : null}
     </div>
-  );
-}
-
-function fieldClass(error?: string) {
-  return cn(
-    "w-full rounded-sm border bg-cream px-3 py-2.5 text-sm text-navy outline-none transition-colors",
-    "placeholder:text-ink/40 disabled:cursor-not-allowed disabled:opacity-60",
-    error
-      ? "border-red-400 focus:border-red-500"
-      : "border-navy/15 focus:border-globe",
   );
 }

@@ -16,19 +16,9 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeId, setActiveId] = useState("home");
-  const [overHero, setOverHero] = useState(true);
 
   useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY > 20);
-      const hero = document.getElementById("home");
-      if (!hero) {
-        setOverHero(window.scrollY < 80);
-        return;
-      }
-      const bottom = hero.getBoundingClientRect().bottom;
-      setOverHero(bottom > 96);
-    };
+    const onScroll = () => setScrolled(window.scrollY > 16);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -75,19 +65,20 @@ export function Header() {
     };
   }, [mobileOpen]);
 
-  const onDark = overHero && !scrolled;
-
   return (
     <>
       <header
         className={cn(
-          "sticky top-0 z-40 border-b transition-all duration-300",
+          "sticky top-0 z-40 border-b transition-shadow duration-300",
           scrolled
-            ? "border-navy/10 bg-cream/95 shadow-[0_6px_20px_rgba(22,58,92,0.05)] backdrop-blur-md"
-            : onDark
-              ? "border-transparent bg-transparent"
-              : "border-transparent bg-cream/80 backdrop-blur-sm",
+            ? "shadow-[0_6px_20px_rgba(22,58,92,0.06)]"
+            : "shadow-none",
         )}
+        style={{
+          backgroundColor: "rgba(251,248,245,0.97)",
+          borderColor: "rgba(22,58,92,0.1)",
+          backdropFilter: "blur(10px)",
+        }}
       >
         <Container className="flex h-16 items-center justify-between gap-6 lg:h-[4.5rem]">
           <Link
@@ -100,17 +91,12 @@ export function Header() {
               alt=""
               width={40}
               height={40}
-              className={cn(
-                "size-9 object-contain sm:size-10",
-                onDark && "brightness-0 invert",
-              )}
+              className="size-9 object-contain sm:size-10"
               priority
             />
             <span
-              className={cn(
-                "hidden truncate font-heading text-[1.05rem] font-semibold tracking-tight sm:inline",
-                onDark ? "text-white" : "text-navy",
-              )}
+              className="hidden truncate font-heading text-[1.05rem] font-semibold tracking-tight sm:inline"
+              style={{ color: "#163A5C" }}
             >
               {organization.name}
             </span>
@@ -126,24 +112,19 @@ export function Header() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={cn(
-                    "group relative px-2.5 py-2 text-[0.78rem] font-medium tracking-[0.02em] transition-colors",
-                    onDark
-                      ? isActive
-                        ? "text-white"
-                        : "text-white/70 hover:text-white"
-                      : isActive
-                        ? "text-navy"
-                        : "text-ink/80 hover:text-navy",
-                  )}
+                  className="group relative px-2.5 py-2 text-[0.78rem] font-medium tracking-[0.02em] transition-opacity hover:opacity-100"
+                  style={{
+                    color: isActive ? "#163A5C" : "#4A5A6A",
+                    opacity: isActive ? 1 : 0.9,
+                  }}
                 >
                   {item.label}
                   <span
                     className={cn(
                       "absolute inset-x-2.5 -bottom-0.5 h-[1.5px] origin-left transition-transform duration-300",
                       isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-50",
-                      onDark ? "bg-gold" : "bg-gold",
                     )}
+                    style={{ backgroundColor: "#C8871F" }}
                     aria-hidden
                   />
                 </Link>
@@ -164,12 +145,8 @@ export function Header() {
             </Button>
             <button
               type="button"
-              className={cn(
-                "rounded-sm p-2 transition-colors",
-                onDark
-                  ? "text-white hover:bg-white/10"
-                  : "text-navy hover:bg-mist",
-              )}
+              className="rounded-sm p-2 transition-colors hover:bg-mist"
+              style={{ color: "#163A5C" }}
               aria-label="Open navigation menu"
               aria-expanded={mobileOpen}
               onClick={() => setMobileOpen(true)}

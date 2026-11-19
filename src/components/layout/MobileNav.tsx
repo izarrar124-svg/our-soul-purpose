@@ -6,7 +6,6 @@ import { X } from "lucide-react";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { primaryNav, ctaNav } from "@/data/navigation";
 import { Button } from "@/components/ui/Button";
-import { cn } from "@/lib/cn";
 
 type MobileNavProps = {
   open: boolean;
@@ -61,15 +60,25 @@ export function MobileNav({ open, onClose, activeId }: MobileNavProps) {
             animate={{ x: 0 }}
             exit={reduceMotion ? undefined : { x: "100%" }}
             transition={{ type: "spring", stiffness: 380, damping: 36 }}
-            className="absolute top-0 right-0 flex h-full w-[min(100%,22rem)] flex-col bg-cream shadow-2xl"
+            className="absolute top-0 right-0 flex h-full w-[min(100%,22rem)] flex-col shadow-2xl"
+            style={{ backgroundColor: "#FBF8F5" }}
             aria-label="Mobile"
           >
-            <div className="flex items-center justify-between border-b border-navy/10 px-5 py-4">
-              <p className="font-heading text-lg font-semibold text-navy">Menu</p>
+            <div
+              className="flex items-center justify-between px-5 py-4"
+              style={{ borderBottom: "1px solid rgba(22,58,92,0.1)" }}
+            >
+              <p
+                className="font-heading text-lg font-semibold"
+                style={{ color: "#163A5C" }}
+              >
+                Menu
+              </p>
               <button
                 type="button"
                 onClick={onClose}
-                className="rounded-sm p-2 text-navy transition-colors hover:bg-mist"
+                className="rounded-sm p-2 transition-colors hover:bg-mist"
+                style={{ color: "#163A5C" }}
                 aria-label="Close navigation"
               >
                 <X className="size-5" aria-hidden />
@@ -88,12 +97,14 @@ export function MobileNav({ open, onClose, activeId }: MobileNavProps) {
                     <Link
                       href={item.href}
                       onClick={onClose}
-                      className={cn(
-                        "block border-l-2 px-4 py-3.5 text-[0.95rem] font-medium transition-colors",
-                        isActive
-                          ? "border-gold bg-mist/80 text-navy"
-                          : "border-transparent text-navy hover:bg-mist/60",
-                      )}
+                      className="block border-l-2 px-4 py-3.5 text-[0.95rem] font-medium"
+                      style={{
+                        color: "#163A5C",
+                        borderColor: isActive ? "#C8871F" : "transparent",
+                        backgroundColor: isActive
+                          ? "rgba(230,238,246,0.85)"
+                          : "transparent",
+                      }}
                     >
                       {item.label}
                     </Link>

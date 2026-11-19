@@ -13,19 +13,10 @@ import {
   type PortfolioCategory,
   type PortfolioItem,
 } from "@/data/portfolio";
-import { cn } from "@/lib/cn";
 
 const categoryLabels = Object.fromEntries(
   portfolioFilters.map((f) => [f.id, f.label]),
 ) as Record<"all" | PortfolioCategory, string>;
-
-const aspectCycle = [
-  "aspect-[4/5]",
-  "aspect-[3/4]",
-  "aspect-square",
-  "aspect-[5/4]",
-  "aspect-[4/3]",
-] as const;
 
 export function Portfolio() {
   const reduceMotion = useReducedMotion();
@@ -54,11 +45,12 @@ export function Portfolio() {
         eyebrow={portfolioSection.eyebrow}
         title={portfolioSection.heading}
         description={portfolioSection.intro}
-        className="mb-10 max-w-3xl"
+        align="center"
+        className="mx-auto mb-10 max-w-2xl"
       />
 
       <div
-        className="mb-12 flex flex-wrap gap-2"
+        className="mb-10 flex flex-wrap justify-center gap-2"
         role="tablist"
         aria-label="Portfolio filters"
       >
@@ -78,12 +70,20 @@ export function Portfolio() {
               role="tab"
               aria-selected={isActive}
               onClick={() => setFilter(entry.id)}
-              className={cn(
-                "border px-3.5 py-2 text-sm font-medium transition-colors",
+              className="px-3.5 py-2 text-sm font-medium transition-colors"
+              style={
                 isActive
-                  ? "border-navy bg-navy text-white"
-                  : "border-navy/15 bg-transparent text-navy hover:border-navy/35",
-              )}
+                  ? {
+                      backgroundColor: "#163A5C",
+                      color: "#ffffff",
+                      border: "1px solid #163A5C",
+                    }
+                  : {
+                      backgroundColor: "transparent",
+                      color: "#163A5C",
+                      border: "1px solid rgba(22,58,92,0.2)",
+                    }
+              }
             >
               {entry.label}
             </button>
@@ -92,11 +92,11 @@ export function Portfolio() {
       </div>
 
       {filtered.length === 0 ? (
-        <p className="text-sm text-ink/70">
+        <p className="text-center text-sm" style={{ color: "#4A5A6A" }}>
           No portfolio photos in this category yet.
         </p>
       ) : (
-        <div className="space-y-5">
+        <div className="grid gap-4 lg:grid-cols-12 lg:gap-5">
           {featured ? (
             <motion.button
               type="button"
@@ -105,84 +105,144 @@ export function Portfolio() {
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
               onClick={() => openItem(featured)}
-              className="group relative grid w-full overflow-hidden bg-cream text-left lg:grid-cols-12"
+              className="group relative min-h-[22rem] overflow-hidden text-left sm:min-h-[28rem] lg:col-span-7 lg:min-h-[32rem]"
+              style={{ backgroundColor: "#E6EEF6" }}
             >
-              <div className="relative min-h-[22rem] lg:col-span-8 lg:min-h-[34rem]">
-                <Image
-                  src={featured.src}
-                  alt={featured.title}
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 66vw"
-                  className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
-                  priority
-                />
-              </div>
-              <div className="flex flex-col justify-end p-6 sm:p-8 lg:col-span-4 lg:p-10">
-                <span className="text-[0.65rem] font-semibold tracking-[0.16em] text-gold uppercase">
+              <Image
+                src={featured.src}
+                alt={featured.title}
+                fill
+                sizes="(max-width: 1024px) 100vw, 58vw"
+                className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                priority
+              />
+              <div
+                className="absolute inset-0"
+                style={{
+                  background:
+                    "linear-gradient(180deg, transparent 42%, rgba(22,58,92,0.82) 100%)",
+                }}
+                aria-hidden
+              />
+              <div className="absolute inset-x-0 bottom-0 p-5 sm:p-7">
+                <span
+                  className="inline-block px-2.5 py-1 text-[0.65rem] font-semibold tracking-[0.14em] uppercase"
+                  style={{ backgroundColor: "#C8871F", color: "#ffffff" }}
+                >
                   {categoryLabels[featured.category]}
                 </span>
-                <p className="mt-3 font-heading text-2xl font-semibold text-navy sm:text-3xl">
+                <p
+                  className="mt-3 font-heading text-2xl font-semibold sm:text-3xl"
+                  style={{ color: "#ffffff" }}
+                >
                   {featured.title}
                 </p>
-                <p className="mt-3 text-sm leading-relaxed text-ink">
+                <p
+                  className="mt-2 max-w-md text-sm leading-relaxed"
+                  style={{ color: "rgba(255,255,255,0.85)" }}
+                >
                   {featured.description}
                 </p>
-                <span className="mt-6 text-sm font-semibold text-navy underline-offset-4 group-hover:underline">
-                  View photo
-                </span>
               </div>
             </motion.button>
           ) : null}
 
-          <ul className="columns-1 gap-5 sm:columns-2 lg:columns-3">
-            {rest.map((item, index) => (
-              <motion.li
+          <div className="grid gap-4 sm:grid-cols-2 lg:col-span-5 lg:grid-cols-1">
+            {rest.slice(0, 3).map((item, index) => (
+              <motion.button
                 key={item.id}
-                initial={reduceMotion ? false : { opacity: 0, y: 12 }}
+                type="button"
+                initial={reduceMotion ? false : { opacity: 0, y: 14 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: Math.min(index * 0.03, 0.3) }}
-                className="mb-5 break-inside-avoid"
+                transition={{ duration: 0.45, delay: index * 0.05 }}
+                onClick={() => openItem(item)}
+                className="group relative min-h-[11rem] overflow-hidden text-left sm:min-h-[12rem]"
+                style={{ backgroundColor: "#E6EEF6" }}
               >
-                <button
-                  type="button"
-                  onClick={() => openItem(item)}
-                  className="group relative block w-full overflow-hidden bg-cream text-left"
+                <Image
+                  src={item.src}
+                  alt={item.title}
+                  fill
+                  sizes="(max-width: 1024px) 50vw, 28vw"
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    background:
+                      "linear-gradient(180deg, transparent 35%, rgba(22,58,92,0.78) 100%)",
+                  }}
+                  aria-hidden
+                />
+                <div className="absolute inset-x-0 bottom-0 p-4">
+                  <span
+                    className="text-[0.65rem] font-semibold tracking-[0.14em] uppercase"
+                    style={{ color: "#C8871F" }}
+                  >
+                    {categoryLabels[item.category]}
+                  </span>
+                  <p
+                    className="mt-1 font-heading text-lg font-semibold"
+                    style={{ color: "#ffffff" }}
+                  >
+                    {item.title}
+                  </p>
+                </div>
+              </motion.button>
+            ))}
+          </div>
+
+          {rest.length > 3 ? (
+            <ul className="grid gap-4 sm:grid-cols-2 lg:col-span-12 lg:grid-cols-4">
+              {rest.slice(3).map((item, index) => (
+                <motion.li
+                  key={item.id}
+                  initial={reduceMotion ? false : { opacity: 0, y: 12 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: index * 0.04 }}
                 >
-                  <div
-                    className={cn(
-                      "relative w-full overflow-hidden",
-                      aspectCycle[index % aspectCycle.length],
-                    )}
+                  <button
+                    type="button"
+                    onClick={() => openItem(item)}
+                    className="group relative block aspect-[4/3] w-full overflow-hidden text-left"
+                    style={{ backgroundColor: "#E6EEF6" }}
                   >
                     <Image
                       src={item.src}
                       alt={item.title}
                       fill
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      sizes="(max-width: 1024px) 50vw, 25vw"
                       className="object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                     <div
                       className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
                       style={{
                         background:
-                          "linear-gradient(180deg, transparent 40%, rgba(22,58,92,0.78) 100%)",
+                          "linear-gradient(180deg, transparent 30%, rgba(22,58,92,0.8) 100%)",
                       }}
                       aria-hidden
                     />
-                  </div>
-                  <div className="p-4">
-                    <span className="text-[0.65rem] font-semibold tracking-[0.14em] text-ocean uppercase">
-                      {categoryLabels[item.category]}
-                    </span>
-                    <p className="mt-1.5 font-heading text-lg font-semibold text-navy">
-                      {item.title}
-                    </p>
-                  </div>
-                </button>
-              </motion.li>
-            ))}
-          </ul>
+                    <div className="absolute inset-x-0 bottom-0 p-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                      <span
+                        className="text-[0.65rem] font-semibold tracking-[0.12em] uppercase"
+                        style={{ color: "#C8871F" }}
+                      >
+                        {categoryLabels[item.category]}
+                      </span>
+                      <p
+                        className="mt-1 font-heading text-sm font-semibold"
+                        style={{ color: "#ffffff" }}
+                      >
+                        {item.title}
+                      </p>
+                    </div>
+                  </button>
+                </motion.li>
+              ))}
+            </ul>
+          ) : null}
         </div>
       )}
 

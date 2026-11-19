@@ -1,26 +1,159 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --navy: #163a5c;
+  --ocean: #0f4c6e;
+  --globe: #5fa4c1;
+  --mist: #e6eef6;
+  --cream: #fbf8f5;
+  --gold: #c8871f;
+  --ink: #3d4b59;
+  --white: #ffffff;
+  --background: var(--cream);
+  --foreground: var(--navy);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-navy: #163a5c;
+  --color-ocean: #0f4c6e;
+  --color-globe: #5fa4c1;
+  --color-mist: #e6eef6;
+  --color-cream: #fbf8f5;
+  --color-gold: #c8871f;
+  --color-ink: #3d4b59;
+  --color-background: #fbf8f5;
+  --color-foreground: #163a5c;
+  --font-heading: var(--font-fraunces), "Iowan Old Style", "Palatino Linotype",
+    Palatino, Georgia, serif;
+  --font-sans: var(--font-outfit), "Segoe UI", Arial, Helvetica, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
+/* Headings inherit color/weight from components — do NOT force navy globally
+   (that previously made hero text invisible on the dark overlay). */
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-heading);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--globe) 35%, white);
+  color: var(--navy);
+}
+
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -100%;
+  z-index: 100;
+  border-radius: 0.25rem;
+  background: var(--navy);
+  color: white;
+  padding: 0.75rem 1rem;
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+.font-heading {
+  font-family: var(--font-heading);
+}
+
+.font-body {
+  font-family: var(--font-sans);
+}
+
+/* Explicit brand utilities — reliable across Tailwind opacity/detection edge cases */
+.btn-primary {
+  background-color: #c8871f;
+  color: #ffffff;
+}
+
+.btn-primary:hover {
+  background-color: #b4781b;
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+}
+
+.btn-secondary:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: #163a5c;
+  border: 1px solid rgba(22, 58, 92, 0.25);
+}
+
+.btn-outline:hover {
+  background-color: rgba(230, 238, 246, 0.7);
+  border-color: rgba(22, 58, 92, 0.4);
+}
+
+.btn-ghost {
+  background-color: transparent;
+  color: #163a5c;
+}
+
+.btn-ghost:hover {
+  background-color: rgba(230, 238, 246, 0.85);
+}
+
+.text-on-dark {
+  color: #ffffff;
+}
+
+.text-on-dark-muted {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.bg-brand-navy {
+  background-color: #163a5c;
+}
+
+.bg-brand-gold {
+  background-color: #c8871f;
+  color: #ffffff;
+}
+

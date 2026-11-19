@@ -1,8 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ExternalLink } from "lucide-react";
-import { footerQuickLinks } from "@/data/navigation";
-import { programs } from "@/data/programs";
+import {
+  footerExploreLinks,
+  footerLegalLinks,
+  ctaNav,
+} from "@/data/navigation";
 import { media } from "@/data/media";
 import {
   getActiveSocials,
@@ -10,6 +13,7 @@ import {
   organization,
   type SocialLinks,
 } from "@/data/organization";
+import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 
 const socialLabels: Record<keyof SocialLinks, string> = {
@@ -20,6 +24,14 @@ const socialLabels: Record<keyof SocialLinks, string> = {
   youtube: "YouTube",
 };
 
+const bandLinks = [
+  { label: "About", href: "/#about" },
+  { label: "Programs", href: "/#programs" },
+  { label: "Portfolio", href: "/#portfolio" },
+  { label: "Donate", href: "/#donate" },
+  { label: "Contact", href: "/#contact" },
+];
+
 export function Footer() {
   const socials = getActiveSocials();
   const showEmail = hasContactEmail();
@@ -27,134 +39,207 @@ export function Footer() {
 
   return (
     <footer className="bg-navy text-white">
-      <Container className="py-14 sm:py-16">
-        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4 lg:gap-8">
-          <div className="lg:col-span-1">
-            <Link href="/#home" className="inline-flex items-center gap-3">
-              <Image
-                src={media.logo.src}
-                alt={media.logo.alt}
-                width={48}
-                height={48}
-                className="size-12 rounded-sm bg-cream object-contain p-1"
-              />
-              <span className="font-heading text-lg font-semibold">
-                {organization.name}
-              </span>
-            </Link>
-            <p className="mt-4 font-heading text-base text-white/85 italic">
-              {organization.tagline}
-            </p>
-            <p className="mt-3 text-sm leading-relaxed text-white/70">
-              Founded {organization.foundedYear}. Headquartered in Dubai, with
-              community presence in Pakistan and the United States.
-            </p>
-          </div>
-
-          <div>
-            <h2 className="text-sm font-semibold tracking-[0.14em] text-globe uppercase">
-              Quick links
-            </h2>
-            <ul className="mt-4 space-y-2">
-              {footerQuickLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-white/80 transition-colors hover:text-white"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h2 className="text-sm font-semibold tracking-[0.14em] text-globe uppercase">
-              Programs
-            </h2>
-            <ul className="mt-4 space-y-2">
-              {programs.map((program) => (
-                <li key={program.id}>
-                  <Link
-                    href={`/#programs`}
-                    className="text-sm text-white/80 transition-colors hover:text-white"
-                  >
-                    {program.title}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h2 className="text-sm font-semibold tracking-[0.14em] text-globe uppercase">
-              Contact
-            </h2>
-            <ul className="mt-4 space-y-2 text-sm text-white/80">
-              {organization.locations.map((location) => (
-                <li key={location.id}>
-                  <span className="text-white">{location.name}</span>
-                  <span className="text-white/60"> — {location.role}</span>
-                </li>
-              ))}
-              {showEmail ? (
-                <li>
-                  <a
-                    href={`mailto:${organization.email}`}
-                    className="transition-colors hover:text-white"
-                  >
-                    {organization.email}
-                  </a>
-                </li>
-              ) : null}
-              {showPhone ? (
-                <li>
-                  <a
-                    href={`tel:${organization.phone.replace(/\s+/g, "")}`}
-                    className="transition-colors hover:text-white"
-                  >
-                    {organization.phone}
-                  </a>
-                </li>
-              ) : null}
-              {!showEmail && !showPhone ? (
-                <li className="text-white/60">
-                  Contact details will appear here when published. Use the
-                  contact form when Formspree is configured.
-                </li>
-              ) : null}
-            </ul>
-
-            {socials.length > 0 ? (
-              <ul className="mt-5 flex flex-wrap gap-3">
-                {socials.map(({ platform, href }) => (
-                  <li key={platform}>
-                    <a
-                      href={href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex size-9 items-center justify-center rounded-sm bg-white/10 text-white transition-colors hover:bg-white/20"
-                      aria-label={socialLabels[platform]}
-                    >
-                      <ExternalLink className="size-4" aria-hidden />
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            ) : null}
-          </div>
-        </div>
-
-        <div className="mt-12 flex flex-col gap-3 border-t border-white/15 pt-6 text-sm text-white/60 sm:flex-row sm:items-center sm:justify-between">
-          <p>
-            © {organization.copyrightYear} {organization.name}. All rights
-            reserved.
+      {/* Band A — closing CTA */}
+      <div className="border-b border-white/10">
+        <Container className="py-14 sm:py-16 lg:py-20">
+          <p
+            className="font-sans text-[0.7rem] font-semibold tracking-[0.22em] uppercase"
+            style={{ color: "rgba(95,164,193,0.95)" }}
+          >
+            Let&apos;s Make a Difference
           </p>
-          <Link href="/privacy" className="hover:text-white">
-            Privacy Policy
-          </Link>
-        </div>
+          <h2
+            className="mt-4 max-w-2xl font-heading text-3xl tracking-tight sm:text-4xl lg:text-[2.75rem]"
+            style={{ fontWeight: 700, color: "#ffffff" }}
+          >
+            Compassion grows when we walk together.
+          </h2>
+          <p
+            className="mt-5 max-w-xl font-sans text-base leading-relaxed"
+            style={{ color: "rgba(255,255,255,0.78)" }}
+          >
+            Join Our Soul Purpose in serving humanity one life at a time —
+            through generosity, partnership, and presence across the communities
+            we support.
+          </p>
+          <div className="mt-8">
+            <Button href={ctaNav.href} size="lg">
+              {ctaNav.label}
+            </Button>
+          </div>
+        </Container>
+      </div>
+
+      {/* Band B — brand + links */}
+      <div className="border-b border-white/10">
+        <Container className="py-12 sm:py-14">
+          <div className="grid gap-10 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:items-start lg:gap-16">
+            <div>
+              <Link href="/#home" className="inline-flex items-center gap-3">
+                <Image
+                  src={media.logoMark?.src ?? media.logo.src}
+                  alt={media.logoMark?.alt ?? media.logo.alt}
+                  width={44}
+                  height={44}
+                  className="size-11 rounded-sm bg-cream object-contain p-1"
+                />
+                <span
+                  className="font-heading text-lg"
+                  style={{ fontWeight: 600, color: "#ffffff" }}
+                >
+                  {organization.name}
+                </span>
+              </Link>
+              <p
+                className="mt-4 max-w-md font-heading text-base italic"
+                style={{ color: "rgba(255,255,255,0.82)" }}
+              >
+                {organization.tagline}
+              </p>
+              <p
+                className="mt-3 max-w-md text-sm leading-relaxed"
+                style={{ color: "rgba(255,255,255,0.62)" }}
+              >
+                Founded {organization.foundedYear}. Headquartered in Dubai, with
+                community presence in Pakistan and the United States.
+              </p>
+
+              {(showEmail || showPhone || socials.length > 0) && (
+                <ul className="mt-5 space-y-2 text-sm">
+                  {showEmail ? (
+                    <li>
+                      <a
+                        href={`mailto:${organization.email}`}
+                        className="transition-colors hover:text-white"
+                        style={{ color: "rgba(255,255,255,0.78)" }}
+                      >
+                        {organization.email}
+                      </a>
+                    </li>
+                  ) : null}
+                  {showPhone ? (
+                    <li>
+                      <a
+                        href={`tel:${organization.phone.replace(/\s+/g, "")}`}
+                        className="transition-colors hover:text-white"
+                        style={{ color: "rgba(255,255,255,0.78)" }}
+                      >
+                        {organization.phone}
+                      </a>
+                    </li>
+                  ) : null}
+                </ul>
+              )}
+
+              {socials.length > 0 ? (
+                <ul className="mt-5 flex flex-wrap gap-3">
+                  {socials.map(({ platform, href }) => (
+                    <li key={platform}>
+                      <a
+                        href={href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex size-9 items-center justify-center rounded-sm bg-white/10 text-white transition-colors hover:bg-white/20"
+                        aria-label={socialLabels[platform]}
+                      >
+                        <ExternalLink className="size-4" aria-hidden />
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
+            </div>
+
+            <div className="grid gap-8 sm:grid-cols-2">
+              <div>
+                <h3
+                  className="text-sm font-semibold tracking-[0.14em] uppercase"
+                  style={{ color: "rgba(95,164,193,0.95)" }}
+                >
+                  Explore
+                </h3>
+                <ul className="mt-4 space-y-2.5">
+                  {bandLinks.map((link) => (
+                    <li key={link.href}>
+                      <Link
+                        href={link.href}
+                        className="text-sm transition-colors hover:text-white"
+                        style={{ color: "rgba(255,255,255,0.78)" }}
+                      >
+                        {link.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <h3
+                  className="text-sm font-semibold tracking-[0.14em] uppercase"
+                  style={{ color: "rgba(95,164,193,0.95)" }}
+                >
+                  More
+                </h3>
+                <ul className="mt-4 space-y-2.5">
+                  {footerExploreLinks
+                    .filter(
+                      (link) =>
+                        !bandLinks.some((band) => band.href === link.href),
+                    )
+                    .map((link) => (
+                      <li key={link.href}>
+                        <Link
+                          href={link.href}
+                          className="text-sm transition-colors hover:text-white"
+                          style={{ color: "rgba(255,255,255,0.78)" }}
+                        >
+                          {link.label}
+                        </Link>
+                      </li>
+                    ))}
+                  <li>
+                    <Link
+                      href="/#presence"
+                      className="text-sm transition-colors hover:text-white"
+                      style={{ color: "rgba(255,255,255,0.78)" }}
+                    >
+                      Global Presence
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/#involved"
+                      className="text-sm transition-colors hover:text-white"
+                      style={{ color: "rgba(255,255,255,0.78)" }}
+                    >
+                      Get Involved
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </Container>
+      </div>
+
+      {/* Band C — legal */}
+      <Container className="flex flex-col gap-3 py-6 text-sm sm:flex-row sm:items-center sm:justify-between">
+        <p style={{ color: "rgba(255,255,255,0.55)" }}>
+          © {organization.copyrightYear} {organization.name}. All rights
+          reserved.
+        </p>
+        <ul className="flex flex-wrap gap-x-5 gap-y-2">
+          {footerLegalLinks.map((link) => (
+            <li key={link.href}>
+              <Link
+                href={link.href}
+                className="transition-colors hover:text-white"
+                style={{ color: "rgba(255,255,255,0.55)" }}
+              >
+                {link.label === "Privacy Policy" ? "Privacy" : "Terms"}
+              </Link>
+            </li>
+          ))}
+        </ul>
       </Container>
     </footer>
   );

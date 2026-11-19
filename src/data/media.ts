@@ -1,7 +1,6 @@
 /**
- * Temporary atmospheric imagery for layout and atmosphere.
- * These images are licensed stock placeholders — not OSP beneficiaries or completed projects.
- * Replace files in /public/images and update paths here when original photography is available.
+ * Site imagery paths and credits.
+ * Portfolio field photography lives in /public/images/portfolio.
  */
 
 export type MediaAsset = {
@@ -13,21 +12,27 @@ export type MediaAsset = {
 
 export const media = {
   hero: {
-    src: "/images/hero/hero.jpg",
-    alt: "Atmospheric photograph of people gathered in mutual support — illustrative imagery",
-    credit: "Unsplash",
+    src: "/images/portfolio/portfolio-01.jpg",
+    alt: "Our Soul Purpose relief distribution — compassion in action",
+    credit: "Our Soul Purpose",
     note: "",
   },
   about: {
-    src: "/images/about/about.jpg",
-    alt: "Community volunteers working together",
-    credit: "Unsplash",
+    src: "/images/portfolio/portfolio-02.jpg",
+    alt: "Our Soul Purpose community support work",
+    credit: "Our Soul Purpose",
     note: "",
   },
   programs: {
     src: "/images/programs/programs.jpg",
     alt: "Hands offering care and support",
     credit: "Unsplash",
+    note: "",
+  },
+  donate: {
+    src: "/images/portfolio/portfolio-03.jpg",
+    alt: "Humanitarian relief packages prepared with dignity",
+    credit: "Our Soul Purpose",
     note: "",
   },
   presence: {
@@ -41,5 +46,11 @@ export const media = {
     alt: "Our Soul Purpose logo — two caring hands holding a globe with a hopeful figure at its heart",
     credit: "Our Soul Purpose",
     note: "Approved brand logo",
+  },
+  logoMark: {
+    src: "/images/brand/logo-mark.png",
+    alt: "Our Soul Purpose emblem",
+    credit: "Our Soul Purpose",
+    note: "Approved brand mark",
   },
 } as const satisfies Record<string, MediaAsset>;

@@ -11,10 +11,10 @@ export function Impact() {
   return (
     <Section id="impact" tone="navy" className="relative overflow-hidden">
       <div
-        className="pointer-events-none absolute inset-0 opacity-30"
+        className="pointer-events-none absolute inset-0 opacity-25"
         style={{
           backgroundImage:
-            "radial-gradient(circle at 20% 20%, #5fa4c1 0%, transparent 45%), radial-gradient(circle at 80% 70%, #0f4c6e 0%, transparent 40%)",
+            "radial-gradient(circle at 18% 18%, #5fa4c1 0%, transparent 42%), radial-gradient(circle at 82% 72%, #0f4c6e 0%, transparent 38%)",
         }}
         aria-hidden
       />
@@ -25,7 +25,7 @@ export function Impact() {
           description={impactSection.intro.body}
           tone="light"
           align="center"
-          className="mb-12"
+          className="mb-14"
         />
 
         {impactMetrics.length > 0 ? (
@@ -43,7 +43,7 @@ export function Impact() {
             ))}
           </ul>
         ) : (
-          <ul className="grid gap-5 md:grid-cols-3">
+          <ul className="grid gap-8 md:grid-cols-3 md:gap-10">
             {impactSection.pillars.map((pillar, index) => (
               <motion.li
                 key={pillar.title}
@@ -51,12 +51,14 @@ export function Impact() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.45, delay: index * 0.06 }}
-                className="border p-6"
-                style={{
-                  borderColor: "rgba(255,255,255,0.18)",
-                  backgroundColor: "rgba(255,255,255,0.06)",
-                }}
+                className="md:border-l md:border-white/15 md:pl-8 first:md:border-l-0 first:md:pl-0"
               >
+                <p
+                  className="mb-3 font-sans text-[0.65rem] font-semibold tracking-[0.2em] uppercase"
+                  style={{ color: "rgba(200,135,31,0.95)" }}
+                >
+                  0{index + 1}
+                </p>
                 <h3
                   className="font-heading text-xl text-white"
                   style={{ fontWeight: 600, color: "#ffffff" }}
@@ -75,8 +77,8 @@ export function Impact() {
         )}
 
         <p
-          className="mt-10 text-center text-sm"
-          style={{ color: "rgba(255,255,255,0.6)" }}
+          className="mt-12 text-center text-sm"
+          style={{ color: "rgba(255,255,255,0.58)" }}
         >
           {impactSection.note}
         </p>

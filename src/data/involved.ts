@@ -10,7 +10,7 @@ export type InvolvementOption = {
 export const involvedSection = {
   heading: "Be Part of Something Meaningful.",
   intro:
-    "Whether you give your time, collaborate as a partner, or simply walk with us — there is a place for you in this mission.",
+    "Whether you give your time, collaborate as a partner, or walk with us through generosity — there is a place for you in this mission.",
 } as const;
 
 export const involvementOptions: InvolvementOption[] = [
@@ -33,12 +33,12 @@ export const involvementOptions: InvolvementOption[] = [
     icon: "handshake",
   },
   {
-    id: "community",
-    title: "Join Our Community",
+    id: "give",
+    title: "Support the Mission",
     description:
-      "Stay connected to our journey. Follow our mission, share our story, and help hope travel further.",
-    ctaLabel: "Get in Touch",
-    href: "/#contact",
+      "Your kindness helps sustain food, shelter, water, education, healthcare, and orphan support across communities we serve.",
+    ctaLabel: "Join Our Mission",
+    href: "/#donate",
     icon: "sparkles",
   },
 ];

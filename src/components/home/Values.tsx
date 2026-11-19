@@ -29,9 +29,9 @@ export function Values() {
         title={valuesSection.heading}
         description={valuesSection.intro}
         align="center"
-        className="mb-12"
+        className="mb-14"
       />
-      <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      <ul className="grid gap-x-10 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
         {values.map((value, index) => {
           const Icon = iconMap[value.icon];
           return (
@@ -41,9 +41,9 @@ export function Values() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: index * 0.05 }}
-              className="border border-navy/10 bg-cream p-6 text-center"
+              className="text-center"
             >
-              <span className="mx-auto mb-4 flex size-12 items-center justify-center rounded-full bg-mist text-navy">
+              <span className="mx-auto mb-5 flex size-12 items-center justify-center rounded-full bg-mist text-navy">
                 <Icon className="size-5" strokeWidth={1.75} aria-hidden />
               </span>
               <h3 className="font-heading text-xl font-semibold text-navy">

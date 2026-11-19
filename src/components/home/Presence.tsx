@@ -32,16 +32,16 @@ export function Presence() {
         eyebrow="Global Presence"
         title="One Mission. Across Communities."
         description="Our Soul Purpose is headquartered in Dubai and maintains community presence in Pakistan and the United States — one mission, shared across continents."
-        className="mb-10 max-w-3xl"
+        className="mb-12 max-w-3xl"
       />
 
-      <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.3fr)] lg:gap-10">
+      <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.35fr)] lg:gap-12">
         <motion.ul
           initial={reduceMotion ? false : { opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.5 }}
-          className="space-y-3"
+          className="space-y-2"
         >
           {organization.locations.map((location) => {
             const isActive = activeId === location.id;
@@ -51,10 +51,10 @@ export function Presence() {
                   type="button"
                   onClick={() => setActiveId(location.id)}
                   className={cn(
-                    "flex w-full gap-4 border px-4 py-4 text-left transition-colors",
+                    "flex w-full gap-4 px-3 py-4 text-left transition-colors",
                     isActive
-                      ? "border-gold/50 bg-cream"
-                      : "border-navy/10 bg-transparent hover:border-navy/25 hover:bg-cream/70",
+                      ? "border-l-2 border-gold bg-cream/80"
+                      : "border-l-2 border-transparent hover:bg-cream/50",
                   )}
                 >
                   <span

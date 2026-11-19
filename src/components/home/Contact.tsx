@@ -83,7 +83,7 @@ export function Contact() {
   }
 
   return (
-    <Section id="contact" tone="cream">
+    <Section id="contact" tone="mist">
       <div className="grid gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-14">
         <SectionHeading
           eyebrow="Contact"

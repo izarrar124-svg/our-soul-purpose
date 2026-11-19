@@ -20,9 +20,9 @@ export default function PrivacyPage() {
         </h1>
         <p className="mt-4 text-ink leading-relaxed">
           This informational website is operated by {organization.name}. It
-          does not provide user accounts, donations, or payment processing. This
-          page explains how visitor information may be handled when you use the
-          site.
+          does not provide user accounts. Online donation charging and payment
+          processing are not active. This page explains how visitor information
+          may be handled when you use the site.
         </p>
 
         <div className="mt-10 space-y-8 text-ink leading-relaxed">

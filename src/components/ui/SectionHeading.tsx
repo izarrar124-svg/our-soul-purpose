@@ -30,10 +30,10 @@ export function SectionHeading({
       {eyebrow ? (
         <p
           className={cn(
-            "mb-3 font-sans text-xs font-semibold tracking-[0.2em] uppercase",
+            "mb-3 font-sans text-[0.7rem] font-semibold tracking-[0.2em] uppercase",
             !isLight && "text-ocean",
           )}
-          style={isLight ? { color: "rgba(255,255,255,0.8)" } : undefined}
+          style={isLight ? { color: "rgba(255,255,255,0.78)" } : undefined}
         >
           {eyebrow}
         </p>
@@ -56,7 +56,7 @@ export function SectionHeading({
             "mt-5 font-sans text-base leading-relaxed sm:text-lg",
             !isLight && "text-ink",
           )}
-          style={isLight ? { color: "rgba(255,255,255,0.92)" } : undefined}
+          style={isLight ? { color: "rgba(255,255,255,0.9)" } : undefined}
         >
           {description}
         </p>

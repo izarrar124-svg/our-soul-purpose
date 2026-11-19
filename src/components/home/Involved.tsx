@@ -27,9 +27,9 @@ export function Involved() {
         title={involvedSection.heading}
         description={involvedSection.intro}
         align="center"
-        className="mb-12"
+        className="mb-14"
       />
-      <ul className="grid gap-6 md:grid-cols-3">
+      <ul className="grid gap-10 md:grid-cols-3 md:gap-8">
         {involvementOptions.map((option, index) => {
           const Icon = iconMap[option.icon];
           return (
@@ -39,9 +39,9 @@ export function Involved() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.45, delay: index * 0.06 }}
-              className="flex h-full flex-col bg-cream p-7"
+              className="flex h-full flex-col"
             >
-              <span className="mb-5 flex size-12 items-center justify-center rounded-full bg-mist text-navy">
+              <span className="mb-5 flex size-12 items-center justify-center rounded-full bg-cream text-navy">
                 <Icon className="size-5" strokeWidth={1.75} aria-hidden />
               </span>
               <h3 className="font-heading text-2xl font-semibold text-navy">
@@ -50,7 +50,12 @@ export function Involved() {
               <p className="mt-3 flex-1 text-sm leading-relaxed text-ink">
                 {option.description}
               </p>
-              <Button href={option.href} className="mt-6 self-start" size="sm">
+              <Button
+                href={option.href}
+                className="mt-7 self-start"
+                size="sm"
+                variant={option.id === "give" ? "primary" : "outline"}
+              >
                 {option.ctaLabel}
               </Button>
             </motion.li>

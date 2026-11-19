@@ -2,7 +2,7 @@ import Link from "next/link";
 import { cn } from "@/lib/cn";
 
 const variantStyles: Record<
-  "primary" | "secondary" | "outline" | "ghost",
+  "primary" | "secondary" | "outline" | "ghost" | "onDark",
   React.CSSProperties
 > = {
   primary: {
@@ -18,12 +18,17 @@ const variantStyles: Record<
   outline: {
     backgroundColor: "transparent",
     color: "#163A5C",
-    border: "1px solid rgba(22,58,92,0.25)",
+    border: "1px solid rgba(22,58,92,0.28)",
   },
   ghost: {
     backgroundColor: "transparent",
     color: "#163A5C",
     border: "1px solid transparent",
+  },
+  onDark: {
+    backgroundColor: "#C8871F",
+    color: "#FFFFFF",
+    border: "1px solid #C8871F",
   },
 };
 

@@ -38,10 +38,10 @@ export function Programs() {
         title={programsSection.heading}
         description={programsSection.intro}
         align="center"
-        className="mb-12"
+        className="mb-14"
       />
 
-      <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <ul className="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
         {programs.map((program, index) => {
           const Icon = iconMap[program.icon];
           return (
@@ -52,7 +52,7 @@ export function Programs() {
               viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: 0.45, delay: index * 0.04 }}
             >
-              <article className="flex h-full flex-col border border-navy/10 bg-cream p-6 transition-colors hover:border-globe/50">
+              <article className="flex h-full flex-col">
                 <div className="mb-5 flex size-12 items-center justify-center rounded-full bg-mist text-navy">
                   <Icon className="size-5" strokeWidth={1.75} aria-hidden />
                 </div>

@@ -4,7 +4,6 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { siteSeo } from "@/data/seo";
 import { organization } from "@/data/organization";
-import { media } from "@/data/media";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -34,8 +33,12 @@ export const metadata: Metadata = {
   keywords: [...siteSeo.keywords],
   authors: [{ name: organization.name }],
   icons: {
-    icon: media.logo.src,
-    apple: media.logo.src,
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icon-512.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: [{ url: "/apple-icon.png", sizes: "180x180", type: "image/png" }],
   },
   openGraph: {
     title: siteSeo.title,

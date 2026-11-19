@@ -91,14 +91,25 @@ npm run start    # serve production build
 npm run lint     # ESLint
 ```
 
-## Deployment (Vercel)
+## Deployment (GitHub Pages)
 
-1. Push the repository to GitHub (or import the folder in Vercel).
-2. Create a new Vercel project from the repo.
-3. Set `NEXT_PUBLIC_FORMSPREE_ID` in Project Settings → Environment Variables (optional until the form should go live).
-4. Deploy.
+This project is configured for static export and deploys automatically via GitHub Actions on push to `master`.
 
-Any Node host that supports Next.js App Router also works. Set the same environment variable there.
+**Live URL:** https://izarrar124-svg.github.io/our-soul-purpose/
+
+1. In the repo, add Actions secret `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY`.
+2. Push to `master` (or run the **Deploy to GitHub Pages** workflow manually).
+3. In **Settings → Pages**, ensure Source is **GitHub Actions**.
+
+Local Pages-style build:
+
+```bash
+GITHUB_PAGES=true npm run build
+```
+
+### Vercel (optional)
+
+You can also import the repo in Vercel. Set `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY` and optional `NEXT_PUBLIC_FORMSPREE_ID` in project env vars. Do not set `GITHUB_PAGES` on Vercel.
 
 ## Brand
 

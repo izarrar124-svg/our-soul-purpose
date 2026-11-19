@@ -24,38 +24,39 @@ export function Values() {
 
   return (
     <Section id="values" tone="white">
-      <SectionHeading
-        eyebrow="Our Values"
-        title={valuesSection.heading}
-        description={valuesSection.intro}
-        align="center"
-        className="mb-14"
-      />
-      <ul className="grid gap-x-10 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
-        {values.map((value, index) => {
-          const Icon = iconMap[value.icon];
-          return (
-            <motion.li
-              key={value.id}
-              initial={reduceMotion ? false : { opacity: 0, y: 14 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: index * 0.05 }}
-              className="text-center"
-            >
-              <span className="mx-auto mb-5 flex size-12 items-center justify-center rounded-full bg-mist text-navy">
-                <Icon className="size-5" strokeWidth={1.75} aria-hidden />
-              </span>
-              <h3 className="font-heading text-xl font-semibold text-navy">
-                {value.title}
-              </h3>
-              <p className="mt-3 text-sm leading-relaxed text-ink">
-                {value.description}
-              </p>
-            </motion.li>
-          );
-        })}
-      </ul>
+      <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
+        <SectionHeading
+          eyebrow="Our Values"
+          title={valuesSection.heading}
+          description={valuesSection.intro}
+          className="lg:col-span-4"
+        />
+        <ul className="grid gap-0 sm:grid-cols-2 lg:col-span-8">
+          {values.map((value, index) => {
+            const Icon = iconMap[value.icon];
+            return (
+              <motion.li
+                key={value.id}
+                initial={reduceMotion ? false : { opacity: 0, y: 14 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: index * 0.05 }}
+                className="border-t border-navy/10 px-0 py-8 sm:px-6 sm:odd:border-r sm:odd:pr-8 sm:even:pl-8"
+              >
+                <span className="mb-5 flex size-11 items-center justify-center rounded-full bg-mist text-navy">
+                  <Icon className="size-5" strokeWidth={1.5} aria-hidden />
+                </span>
+                <h3 className="font-heading text-xl font-semibold text-navy">
+                  {value.title}
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-ink">
+                  {value.description}
+                </p>
+              </motion.li>
+            );
+          })}
+        </ul>
+      </div>
     </Section>
   );
 }

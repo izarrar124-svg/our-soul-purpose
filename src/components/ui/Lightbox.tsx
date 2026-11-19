@@ -77,21 +77,25 @@ export function Lightbox({
       ref={dialogRef}
       aria-labelledby={titleId}
       className={cn(
-        "fixed inset-0 m-auto w-[min(100%-1rem,56rem)] max-h-[min(92vh,48rem)] overflow-hidden rounded-sm border-0 bg-cream p-0 text-ink shadow-2xl open:flex open:flex-col",
-        "backdrop:bg-navy/70 backdrop:backdrop-blur-[2px]",
+        "fixed inset-0 m-0 h-full max-h-none w-full max-w-none overflow-hidden border-0 bg-navy/95 p-0 text-white open:flex open:flex-col",
+        "backdrop:bg-navy/80",
       )}
       onClick={(event) => {
         if (event.target === dialogRef.current) onClose();
       }}
     >
-      <div className="flex items-start justify-between gap-4 border-b border-navy/10 px-4 py-3 sm:px-5">
+      <div className="flex items-start justify-between gap-4 px-4 py-4 sm:px-6">
         <div className="min-w-0">
-          <p className="text-[0.65rem] font-semibold tracking-[0.16em] text-ocean uppercase">
+          <p
+            className="text-[0.65rem] font-semibold tracking-[0.16em] uppercase"
+            style={{ color: "rgba(95,164,193,0.95)" }}
+          >
             {item?.categoryLabel}
           </p>
           <h3
             id={titleId}
-            className="mt-1 truncate font-heading text-lg font-semibold text-navy sm:text-xl"
+            className="mt-1 truncate font-heading text-lg font-semibold sm:text-xl"
+            style={{ color: "#ffffff" }}
           >
             {item?.title}
           </h3>
@@ -99,21 +103,21 @@ export function Lightbox({
         <button
           type="button"
           onClick={onClose}
-          className="rounded-sm p-1.5 text-ink transition-colors hover:bg-mist hover:text-navy"
+          className="rounded-sm p-1.5 text-white/80 transition-colors hover:bg-white/10 hover:text-white"
           aria-label="Close lightbox"
         >
           <X className="size-5" aria-hidden />
         </button>
       </div>
 
-      <div className="relative min-h-0 flex-1 bg-navy/5">
+      <div className="relative min-h-0 flex-1 px-4 sm:px-10">
         {item ? (
-          <div className="relative mx-auto h-[min(58vh,28rem)] w-full sm:h-[min(62vh,32rem)]">
+          <div className="relative mx-auto h-[min(72vh,40rem)] w-full max-w-5xl">
             <Image
               src={item.src}
               alt={item.title}
               fill
-              sizes="(max-width: 896px) 100vw, 56rem"
+              sizes="100vw"
               className="object-contain"
               priority
             />
@@ -124,7 +128,7 @@ export function Lightbox({
           <button
             type="button"
             onClick={onPrev}
-            className="absolute top-1/2 left-2 flex size-10 -translate-y-1/2 items-center justify-center rounded-full bg-cream/95 text-navy shadow-sm hover:bg-white"
+            className="absolute top-1/2 left-2 flex size-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 sm:left-4"
             aria-label="Previous image"
           >
             <ChevronLeft className="size-5" aria-hidden />
@@ -134,7 +138,7 @@ export function Lightbox({
           <button
             type="button"
             onClick={onNext}
-            className="absolute top-1/2 right-2 flex size-10 -translate-y-1/2 items-center justify-center rounded-full bg-cream/95 text-navy shadow-sm hover:bg-white"
+            className="absolute top-1/2 right-2 flex size-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 sm:right-4"
             aria-label="Next image"
           >
             <ChevronRight className="size-5" aria-hidden />
@@ -143,7 +147,10 @@ export function Lightbox({
       </div>
 
       {item?.description ? (
-        <p className="border-t border-navy/10 px-4 py-3 text-sm leading-relaxed text-ink sm:px-5">
+        <p
+          className="mx-auto max-w-3xl px-4 py-5 text-center text-sm leading-relaxed sm:px-6"
+          style={{ color: "rgba(255,255,255,0.75)" }}
+        >
           {item.description}
         </p>
       ) : null}

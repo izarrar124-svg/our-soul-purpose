@@ -83,18 +83,24 @@ export function Contact() {
   }
 
   return (
-    <Section id="contact" tone="mist">
-      <div className="grid gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-14">
-        <SectionHeading
-          eyebrow="Contact"
-          title="We Would Love to Hear From You"
-          description="Share a question, partnership idea, or interest in volunteering. Until a public email address is published, this form is the planned channel for inquiries."
-        />
+    <Section id="contact" tone="cream">
+      <div className="grid gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-16">
+        <div>
+          <SectionHeading
+            eyebrow="Contact"
+            title="We Would Love to Hear From You"
+            description="Share a question, partnership idea, or interest in volunteering. Until a public email address is published, this form is the planned channel for inquiries."
+          />
+          <div
+            className="mt-10 hidden h-px w-16 bg-gold/60 lg:block"
+            aria-hidden
+          />
+        </div>
 
         <form
           onSubmit={handleSubmit}
           noValidate
-          className="space-y-5 border border-navy/10 bg-white p-6 sm:p-8"
+          className="space-y-5 border-t border-navy/15 pt-8 sm:border sm:border-navy/10 sm:bg-white sm:p-8 sm:pt-8"
           aria-describedby="contact-form-status"
         >
           {!formReady ? (

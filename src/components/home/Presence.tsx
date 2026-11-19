@@ -27,7 +27,7 @@ export function Presence() {
   const [activeId, setActiveId] = useState<string | null>("dubai");
 
   return (
-    <Section id="presence" tone="mist">
+    <Section id="presence" tone="white">
       <SectionHeading
         eyebrow="Global Presence"
         title="One Mission. Across Communities."

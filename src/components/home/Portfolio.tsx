@@ -19,6 +19,14 @@ const categoryLabels = Object.fromEntries(
   portfolioFilters.map((f) => [f.id, f.label]),
 ) as Record<"all" | PortfolioCategory, string>;
 
+const aspectCycle = [
+  "aspect-[4/5]",
+  "aspect-[3/4]",
+  "aspect-square",
+  "aspect-[5/4]",
+  "aspect-[4/3]",
+] as const;
+
 export function Portfolio() {
   const reduceMotion = useReducedMotion();
   const [filter, setFilter] = useState<"all" | PortfolioCategory>("all");
@@ -33,7 +41,7 @@ export function Portfolio() {
   const rest = filtered.filter((item) => item.id !== featured?.id);
 
   const activeItem =
-    activeIndex !== null ? filtered[activeIndex] ?? null : null;
+    activeIndex !== null ? (filtered[activeIndex] ?? null) : null;
 
   function openItem(item: PortfolioItem) {
     const index = filtered.findIndex((entry) => entry.id === item.id);
@@ -41,7 +49,7 @@ export function Portfolio() {
   }
 
   return (
-    <Section id="portfolio" tone="cream">
+    <Section id="portfolio" tone="mist">
       <SectionHeading
         eyebrow={portfolioSection.eyebrow}
         title={portfolioSection.heading}
@@ -50,7 +58,7 @@ export function Portfolio() {
       />
 
       <div
-        className="mb-10 flex flex-wrap gap-2"
+        className="mb-12 flex flex-wrap gap-2"
         role="tablist"
         aria-label="Portfolio filters"
       >
@@ -71,10 +79,10 @@ export function Portfolio() {
               aria-selected={isActive}
               onClick={() => setFilter(entry.id)}
               className={cn(
-                "px-3.5 py-2 text-sm font-medium transition-colors",
+                "border px-3.5 py-2 text-sm font-medium transition-colors",
                 isActive
-                  ? "bg-navy text-white"
-                  : "bg-white text-navy hover:bg-mist",
+                  ? "border-navy bg-navy text-white"
+                  : "border-navy/15 bg-transparent text-navy hover:border-navy/35",
               )}
             >
               {entry.label}
@@ -88,7 +96,7 @@ export function Portfolio() {
           No portfolio photos in this category yet.
         </p>
       ) : (
-        <div className="grid gap-4 lg:grid-cols-12 lg:gap-5">
+        <div className="space-y-5">
           {featured ? (
             <motion.button
               type="button"
@@ -97,117 +105,84 @@ export function Portfolio() {
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
               onClick={() => openItem(featured)}
-              className="group relative min-h-[22rem] overflow-hidden bg-mist text-left sm:min-h-[28rem] lg:col-span-7 lg:min-h-[36rem]"
+              className="group relative grid w-full overflow-hidden bg-cream text-left lg:grid-cols-12"
             >
-              <Image
-                src={featured.src}
-                alt={featured.title}
-                fill
-                sizes="(max-width: 1024px) 100vw, 58vw"
-                className="object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-              <div
-                className="absolute inset-0"
-                style={{
-                  background:
-                    "linear-gradient(180deg, transparent 45%, rgba(22,58,92,0.78) 100%)",
-                }}
-                aria-hidden
-              />
-              <div className="absolute inset-x-0 bottom-0 p-5 sm:p-7">
-                <span className="inline-block bg-gold px-2.5 py-1 text-[0.65rem] font-semibold tracking-[0.14em] text-white uppercase">
+              <div className="relative min-h-[22rem] lg:col-span-8 lg:min-h-[34rem]">
+                <Image
+                  src={featured.src}
+                  alt={featured.title}
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 66vw"
+                  className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                  priority
+                />
+              </div>
+              <div className="flex flex-col justify-end p-6 sm:p-8 lg:col-span-4 lg:p-10">
+                <span className="text-[0.65rem] font-semibold tracking-[0.16em] text-gold uppercase">
                   {categoryLabels[featured.category]}
                 </span>
-                <p
-                  className="mt-3 font-heading text-2xl font-semibold sm:text-3xl"
-                  style={{ color: "#ffffff" }}
-                >
+                <p className="mt-3 font-heading text-2xl font-semibold text-navy sm:text-3xl">
                   {featured.title}
                 </p>
+                <p className="mt-3 text-sm leading-relaxed text-ink">
+                  {featured.description}
+                </p>
+                <span className="mt-6 text-sm font-semibold text-navy underline-offset-4 group-hover:underline">
+                  View photo
+                </span>
               </div>
             </motion.button>
           ) : null}
 
-          <div className="grid gap-4 sm:grid-cols-2 lg:col-span-5 lg:grid-cols-1 lg:gap-5">
-            {rest.slice(0, 4).map((item, index) => (
-              <motion.button
+          <ul className="columns-1 gap-5 sm:columns-2 lg:columns-3">
+            {rest.map((item, index) => (
+              <motion.li
                 key={item.id}
-                type="button"
-                initial={reduceMotion ? false : { opacity: 0, y: 14 }}
+                initial={reduceMotion ? false : { opacity: 0, y: 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.45, delay: index * 0.05 }}
-                onClick={() => openItem(item)}
-                className="group relative min-h-[11rem] overflow-hidden bg-mist text-left sm:min-h-[12.5rem]"
+                transition={{ duration: 0.4, delay: Math.min(index * 0.03, 0.3) }}
+                className="mb-5 break-inside-avoid"
               >
-                <Image
-                  src={item.src}
-                  alt={item.title}
-                  fill
-                  sizes="(max-width: 1024px) 50vw, 28vw"
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                <div
-                  className="absolute inset-0"
-                  style={{
-                    background:
-                      "linear-gradient(180deg, transparent 40%, rgba(22,58,92,0.72) 100%)",
-                  }}
-                  aria-hidden
-                />
-                <div className="absolute inset-x-0 bottom-0 p-4">
-                  <span className="text-[0.65rem] font-semibold tracking-[0.14em] text-gold uppercase">
-                    {categoryLabels[item.category]}
-                  </span>
-                  <p
-                    className="mt-1 font-heading text-lg font-semibold"
-                    style={{ color: "#ffffff" }}
-                  >
-                    {item.title}
-                  </p>
-                </div>
-              </motion.button>
-            ))}
-          </div>
-
-          {rest.length > 4 ? (
-            <ul className="grid gap-4 sm:grid-cols-2 lg:col-span-12 lg:grid-cols-4">
-              {rest.slice(4).map((item, index) => (
-                <motion.li
-                  key={item.id}
-                  initial={reduceMotion ? false : { opacity: 0, y: 12 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: index * 0.03 }}
+                <button
+                  type="button"
+                  onClick={() => openItem(item)}
+                  className="group relative block w-full overflow-hidden bg-cream text-left"
                 >
-                  <button
-                    type="button"
-                    onClick={() => openItem(item)}
-                    className="group relative block aspect-[4/3] w-full overflow-hidden bg-mist text-left"
+                  <div
+                    className={cn(
+                      "relative w-full overflow-hidden",
+                      aspectCycle[index % aspectCycle.length],
+                    )}
                   >
                     <Image
                       src={item.src}
                       alt={item.title}
                       fill
-                      sizes="(max-width: 1024px) 50vw, 25vw"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       className="object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                     <div
-                      className="absolute inset-0 opacity-0 transition-opacity group-hover:opacity-100"
+                      className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
                       style={{
                         background:
-                          "linear-gradient(180deg, transparent 35%, rgba(22,58,92,0.75) 100%)",
+                          "linear-gradient(180deg, transparent 40%, rgba(22,58,92,0.78) 100%)",
                       }}
                       aria-hidden
                     />
-                    <span className="absolute bottom-3 left-3 bg-cream/95 px-2 py-1 text-[0.65rem] font-semibold tracking-[0.12em] text-navy uppercase opacity-0 transition-opacity group-hover:opacity-100">
+                  </div>
+                  <div className="p-4">
+                    <span className="text-[0.65rem] font-semibold tracking-[0.14em] text-ocean uppercase">
                       {categoryLabels[item.category]}
                     </span>
-                  </button>
-                </motion.li>
-              ))}
-            </ul>
-          ) : null}
+                    <p className="mt-1.5 font-heading text-lg font-semibold text-navy">
+                      {item.title}
+                    </p>
+                  </div>
+                </button>
+              </motion.li>
+            ))}
+          </ul>
         </div>
       )}
 
@@ -225,9 +200,7 @@ export function Portfolio() {
             : null
         }
         hasPrev={activeIndex !== null && activeIndex > 0}
-        hasNext={
-          activeIndex !== null && activeIndex < filtered.length - 1
-        }
+        hasNext={activeIndex !== null && activeIndex < filtered.length - 1}
         onPrev={() =>
           setActiveIndex((prev) =>
             prev !== null && prev > 0 ? prev - 1 : prev,

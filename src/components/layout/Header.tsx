@@ -16,9 +16,19 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeId, setActiveId] = useState("home");
+  const [overHero, setOverHero] = useState(true);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    const onScroll = () => {
+      setScrolled(window.scrollY > 20);
+      const hero = document.getElementById("home");
+      if (!hero) {
+        setOverHero(window.scrollY < 80);
+        return;
+      }
+      const bottom = hero.getBoundingClientRect().bottom;
+      setOverHero(bottom > 96);
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -39,7 +49,7 @@ export function Header() {
         }
       },
       {
-        rootMargin: "-30% 0px -55% 0px",
+        rootMargin: "-28% 0px -58% 0px",
         threshold: [0.1, 0.25, 0.5],
       },
     );
@@ -65,31 +75,43 @@ export function Header() {
     };
   }, [mobileOpen]);
 
+  const onDark = overHero && !scrolled;
+
   return (
     <>
       <header
         className={cn(
           "sticky top-0 z-40 border-b transition-all duration-300",
           scrolled
-            ? "border-navy/10 bg-cream/95 shadow-[0_8px_24px_rgba(22,58,92,0.06)] backdrop-blur-md"
-            : "border-transparent bg-cream/90 backdrop-blur-sm",
+            ? "border-navy/10 bg-cream/95 shadow-[0_6px_20px_rgba(22,58,92,0.05)] backdrop-blur-md"
+            : onDark
+              ? "border-transparent bg-transparent"
+              : "border-transparent bg-cream/80 backdrop-blur-sm",
         )}
       >
-        <Container className="flex h-[4.25rem] items-center justify-between gap-6 lg:h-[4.75rem]">
+        <Container className="flex h-16 items-center justify-between gap-6 lg:h-[4.5rem]">
           <Link
             href="/#home"
-            className="flex min-w-0 items-center gap-3"
+            className="flex min-w-0 items-center gap-2.5"
             aria-label={`${organization.name} home`}
           >
             <Image
-              src={media.logoMark?.src ?? media.logo.src}
+              src={media.logoMark.src}
               alt=""
-              width={48}
-              height={48}
-              className="size-11 object-contain sm:size-12"
+              width={40}
+              height={40}
+              className={cn(
+                "size-9 object-contain sm:size-10",
+                onDark && "brightness-0 invert",
+              )}
               priority
             />
-            <span className="hidden truncate font-heading text-lg font-semibold tracking-tight text-navy sm:inline">
+            <span
+              className={cn(
+                "hidden truncate font-heading text-[1.05rem] font-semibold tracking-tight sm:inline",
+                onDark ? "text-white" : "text-navy",
+              )}
+            >
               {organization.name}
             </span>
           </Link>
@@ -105,24 +127,29 @@ export function Header() {
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    "relative px-3 py-2 text-[0.8125rem] font-medium tracking-wide transition-colors",
-                    isActive
-                      ? "text-navy"
-                      : "text-ink hover:text-navy",
+                    "group relative px-2.5 py-2 text-[0.78rem] font-medium tracking-[0.02em] transition-colors",
+                    onDark
+                      ? isActive
+                        ? "text-white"
+                        : "text-white/70 hover:text-white"
+                      : isActive
+                        ? "text-navy"
+                        : "text-ink/80 hover:text-navy",
                   )}
                 >
                   {item.label}
                   <span
                     className={cn(
-                      "absolute inset-x-3 -bottom-0.5 h-px origin-left bg-gold transition-transform duration-300",
-                      isActive ? "scale-x-100" : "scale-x-0",
+                      "absolute inset-x-2.5 -bottom-0.5 h-[1.5px] origin-left transition-transform duration-300",
+                      isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-50",
+                      onDark ? "bg-gold" : "bg-gold",
                     )}
                     aria-hidden
                   />
                 </Link>
               );
             })}
-            <Button href={ctaNav.href} size="sm" className="ml-3">
+            <Button href={ctaNav.href} size="sm" className="ml-4 px-4 py-2 text-[0.78rem]">
               {ctaNav.label}
             </Button>
           </nav>
@@ -131,18 +158,23 @@ export function Header() {
             <Button
               href={ctaNav.href}
               size="sm"
-              className="hidden sm:inline-flex"
+              className="hidden px-3.5 py-2 text-[0.78rem] sm:inline-flex"
             >
               {ctaNav.label}
             </Button>
             <button
               type="button"
-              className="rounded-sm p-2 text-navy transition-colors hover:bg-mist"
+              className={cn(
+                "rounded-sm p-2 transition-colors",
+                onDark
+                  ? "text-white hover:bg-white/10"
+                  : "text-navy hover:bg-mist",
+              )}
               aria-label="Open navigation menu"
               aria-expanded={mobileOpen}
               onClick={() => setMobileOpen(true)}
             >
-              <Menu className="size-6" aria-hidden />
+              <Menu className="size-5" aria-hidden />
             </button>
           </div>
         </Container>

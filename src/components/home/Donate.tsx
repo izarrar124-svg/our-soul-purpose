@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useMemo, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import { Section } from "@/components/layout/Section";
@@ -14,7 +13,6 @@ import {
   type DonationCurrency,
   type DonationFrequency,
 } from "@/data/donation";
-import { media } from "@/data/media";
 import { paymentProvider } from "@/lib/payments";
 import {
   validateDonationForm,
@@ -101,15 +99,35 @@ export function Donate() {
           <p className="mt-5 max-w-xl text-sm leading-relaxed text-ink sm:text-base">
             {donationSection.body}
           </p>
-          <figure className="relative mt-8 min-h-[18rem] overflow-hidden bg-mist sm:min-h-[22rem]">
-            <Image
-              src={media.donate.src}
-              alt={media.donate.alt}
-              fill
-              sizes="(max-width: 1024px) 100vw, 50vw"
-              className="object-cover"
+          <div
+            className="relative mt-8 min-h-[16rem] overflow-hidden sm:min-h-[20rem]"
+            aria-hidden
+          >
+            <div
+              className="absolute inset-0"
+              style={{
+                background:
+                  "linear-gradient(145deg, #163A5C 0%, #0F4C6E 55%, #5FA4C1 140%)",
+              }}
             />
-          </figure>
+            <div
+              className="absolute -top-10 -right-8 size-56 rounded-full border"
+              style={{ borderColor: "rgba(255,255,255,0.12)" }}
+            />
+            <div
+              className="absolute bottom-6 left-6 size-28 rounded-full"
+              style={{
+                background:
+                  "radial-gradient(circle, rgba(200,135,31,0.45), transparent 70%)",
+              }}
+            />
+            <p
+              className="absolute right-6 bottom-6 max-w-[11rem] text-right font-heading text-2xl leading-snug"
+              style={{ color: "rgba(255,255,255,0.92)", fontWeight: 600 }}
+            >
+              Kindness, multiplied.
+            </p>
+          </div>
         </motion.div>
 
         <motion.form

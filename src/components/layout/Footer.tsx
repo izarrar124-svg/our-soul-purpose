@@ -1,12 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ExternalLink } from "lucide-react";
-import {
-  footerExploreLinks,
-  footerLegalLinks,
-  ctaNav,
-} from "@/data/navigation";
+import { footerLegalLinks, ctaNav } from "@/data/navigation";
 import { media } from "@/data/media";
+import { programs } from "@/data/programs";
 import {
   getActiveSocials,
   hasContactEmail,
@@ -40,8 +37,21 @@ export function Footer() {
   return (
     <footer className="bg-navy text-white">
       {/* Band A — closing CTA */}
-      <div className="border-b border-white/10">
-        <Container className="py-14 sm:py-16 lg:py-20">
+      <div className="relative overflow-hidden border-b border-white/10">
+        <div
+          className="pointer-events-none absolute -top-24 -right-16 size-80 rounded-full border"
+          style={{ borderColor: "rgba(95,164,193,0.2)" }}
+          aria-hidden
+        />
+        <div
+          className="pointer-events-none absolute -bottom-20 left-[20%] size-64 rounded-full"
+          style={{
+            background:
+              "radial-gradient(circle, rgba(200,135,31,0.18), transparent 70%)",
+          }}
+          aria-hidden
+        />
+        <Container className="relative py-16 sm:py-20 lg:py-24">
           <p
             className="font-sans text-[0.7rem] font-semibold tracking-[0.22em] uppercase"
             style={{ color: "rgba(95,164,193,0.95)" }}
@@ -49,20 +59,20 @@ export function Footer() {
             Let&apos;s Make a Difference
           </p>
           <h2
-            className="mt-4 max-w-2xl font-heading text-3xl tracking-tight sm:text-4xl lg:text-[2.75rem]"
-            style={{ fontWeight: 700, color: "#ffffff" }}
+            className="mt-5 max-w-4xl font-heading text-4xl tracking-tight sm:text-5xl lg:text-[3.5rem]"
+            style={{ fontWeight: 700, color: "#ffffff", lineHeight: 1.08 }}
           >
-            Compassion grows when we walk together.
+            Humanity Is Stronger When We Stand Together.
           </h2>
           <p
-            className="mt-5 max-w-xl font-sans text-base leading-relaxed"
+            className="mt-6 max-w-xl font-sans text-base leading-relaxed"
             style={{ color: "rgba(255,255,255,0.78)" }}
           >
             Join Our Soul Purpose in serving humanity one life at a time —
             through generosity, partnership, and presence across the communities
             we support.
           </p>
-          <div className="mt-8">
+          <div className="mt-10">
             <Button href={ctaNav.href} size="lg">
               {ctaNav.label}
             </Button>
@@ -77,8 +87,8 @@ export function Footer() {
             <div>
               <Link href="/#home" className="inline-flex items-center gap-3">
                 <Image
-                  src={media.logoMark?.src ?? media.logo.src}
-                  alt={media.logoMark?.alt ?? media.logo.alt}
+                  src={media.logoMark.src}
+                  alt={media.logoMark.alt}
                   width={44}
                   height={44}
                   className="size-11 rounded-sm bg-cream object-contain p-1"
@@ -177,43 +187,20 @@ export function Footer() {
                   className="text-sm font-semibold tracking-[0.14em] uppercase"
                   style={{ color: "rgba(95,164,193,0.95)" }}
                 >
-                  More
+                  Programs
                 </h3>
                 <ul className="mt-4 space-y-2.5">
-                  {footerExploreLinks
-                    .filter(
-                      (link) =>
-                        !bandLinks.some((band) => band.href === link.href),
-                    )
-                    .map((link) => (
-                      <li key={link.href}>
-                        <Link
-                          href={link.href}
-                          className="text-sm transition-colors hover:text-white"
-                          style={{ color: "rgba(255,255,255,0.78)" }}
-                        >
-                          {link.label}
-                        </Link>
-                      </li>
-                    ))}
-                  <li>
-                    <Link
-                      href="/#presence"
-                      className="text-sm transition-colors hover:text-white"
-                      style={{ color: "rgba(255,255,255,0.78)" }}
-                    >
-                      Global Presence
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/#involved"
-                      className="text-sm transition-colors hover:text-white"
-                      style={{ color: "rgba(255,255,255,0.78)" }}
-                    >
-                      Get Involved
-                    </Link>
-                  </li>
+                  {programs.map((program) => (
+                    <li key={program.id}>
+                      <Link
+                        href="/#programs"
+                        className="text-sm transition-colors hover:text-white"
+                        style={{ color: "rgba(255,255,255,0.78)" }}
+                      >
+                        {program.title}
+                      </Link>
+                    </li>
+                  ))}
                 </ul>
               </div>
             </div>

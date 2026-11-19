@@ -1,6 +1,7 @@
 /**
  * Site imagery paths and credits.
- * Portfolio field photography lives in /public/images/portfolio.
+ * Portfolio field photography lives ONLY in /public/images/portfolio
+ * and must not be referenced outside the Portfolio gallery.
  */
 
 export type MediaAsset = {
@@ -11,28 +12,16 @@ export type MediaAsset = {
 };
 
 export const media = {
-  hero: {
-    src: "/images/portfolio/portfolio-01.jpg",
-    alt: "Our Soul Purpose relief distribution — compassion in action",
-    credit: "Our Soul Purpose",
-    note: "",
-  },
   about: {
-    src: "/images/portfolio/portfolio-02.jpg",
-    alt: "Our Soul Purpose community support work",
-    credit: "Our Soul Purpose",
-    note: "",
+    src: "/images/about/about.jpg",
+    alt: "Hands joined in care — a symbol of shared humanity",
+    credit: "Unsplash",
+    note: "Atmospheric editorial image; not OSP field photography",
   },
   programs: {
     src: "/images/programs/programs.jpg",
     alt: "Hands offering care and support",
     credit: "Unsplash",
-    note: "",
-  },
-  donate: {
-    src: "/images/portfolio/portfolio-03.jpg",
-    alt: "Humanitarian relief packages prepared with dignity",
-    credit: "Our Soul Purpose",
     note: "",
   },
   presence: {

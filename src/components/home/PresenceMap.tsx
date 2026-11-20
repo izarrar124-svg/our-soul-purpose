@@ -133,7 +133,6 @@ export function PresenceMap({ activeId, onSelect }: PresenceMapProps) {
           ))}
 
           {organization.locations.map((location) => {
-            const isHq = location.id === "dubai";
             const isActive = activeId === location.id;
             return (
               <MarkerF
@@ -144,7 +143,7 @@ export function PresenceMap({ activeId, onSelect }: PresenceMapProps) {
                 icon={{
                   path: google.maps.SymbolPath.CIRCLE,
                   scale: isActive ? 12 : 10,
-                  fillColor: isHq ? "#C8871F" : "#163A5C",
+                  fillColor: isActive ? "#C8871F" : "#163A5C",
                   fillOpacity: 1,
                   strokeColor: "#FBF8F5",
                   strokeWeight: 3,

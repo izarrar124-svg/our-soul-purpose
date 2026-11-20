@@ -15,7 +15,7 @@ export const aboutSection = {
   /** Proposed website copy — aligned with brand personality */
   introduction: {
     title: "Who We Are",
-    body: "Our Soul Purpose is a humanitarian organization founded in 2025, headquartered in Dubai and serving communities in Pakistan and the United States. We believe meaningful change begins with dignity — meeting people where they are, and walking with them toward hope.",
+    body: "Our Soul Purpose is a humanitarian organization founded in 2025, with community presence in Dubai, Pakistan, and the United States. We believe meaningful change begins with dignity — meeting people where they are, and walking with them toward hope.",
     source: "proposed" as const,
   },
   mission: {

@@ -41,9 +41,9 @@ export const organization = {
       id: "dubai",
       name: "Dubai, UAE",
       shortLabel: "Dubai",
-      role: "Headquarters",
+      role: "Community presence",
       description:
-        "Our headquarters is based in Dubai, anchoring our international humanitarian work.",
+        "We maintain a community presence in Dubai, connecting supporters with our international humanitarian work.",
       lat: 25.2048,
       lng: 55.2708,
       source: "verified" as const,

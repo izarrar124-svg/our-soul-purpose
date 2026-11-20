@@ -31,7 +31,7 @@ export function Presence() {
       <SectionHeading
         eyebrow="Global Presence"
         title="One Mission. Across Communities."
-        description="Our Soul Purpose is headquartered in Dubai and maintains community presence in Pakistan and the United States — one mission, shared across continents."
+        description="Our Soul Purpose maintains community presence in Dubai, Pakistan, and the United States — one mission, shared across continents."
         className="mb-12 max-w-3xl"
       />
 

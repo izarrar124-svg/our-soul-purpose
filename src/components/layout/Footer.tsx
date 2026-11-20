@@ -110,8 +110,8 @@ export function Footer() {
                 className="mt-3 max-w-md text-sm leading-relaxed"
                 style={{ color: "rgba(255,255,255,0.62)" }}
               >
-                Founded {organization.foundedYear}. Headquartered in Dubai, with
-                community presence in Pakistan and the United States.
+                Founded {organization.foundedYear}. Community presence in Dubai,
+                Pakistan, and the United States.
               </p>
 
               {(showEmail || showPhone || socials.length > 0) && (
